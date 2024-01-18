@@ -2,6 +2,9 @@ import express, { urlencoded, json } from "express";
 import { engine } from "express-handlebars";
 import productsRouter from "./src/routes/products.router.js";
 import cartRouter from "./src/routes/cart.router.js";
+import ProductManager from "./src/controllers/productManager.js";
+const product = new ProductManager();
+import { Server } from "socket.io";
 
 // import __dirname from "./src/utils.js";
 // import * as path from "path";
@@ -27,9 +30,30 @@ app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/realtimeproducts", viewsRouter);
 
-
 //Listen
-app.listen(PUERTO, () => {
+const server = app.listen(PUERTO, () => {
   console.log(`escuchando en el http://localhost:${PUERTO}`);
 });
 
+const io = new Server(server);
+
+io.on("connection", async (socket) => {
+  console.log("Nuevo cliente conectado");
+
+  //Enviamos el array de productos al cliente que se conectó:
+  socket.emit("productos", await product.getProducts());
+
+  //Recibimos el evento "eliminarProducto" desde el cliente:
+  socket.on("eliminarProducto", async (id) => {
+    await product.deleteProduct(id);
+    //Enviamos el array de productos actualizado a todos los productos:
+    io.sockets.emit("productos", await product.getProducts());
+  });
+
+  //Recibimos el evento "agregarProducto" desde el cliente:
+  socket.on("agregarProducto", async (producto) => {
+    await product.addProducts(producto);
+    //Enviamos el array de productos actualizado a todos los productos:
+    io.sockets.emit("productos", await product.getProducts());
+  });
+});

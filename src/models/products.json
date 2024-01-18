@@ -33,17 +33,6 @@
     "id": "r8p3qHzuGxyJLE0fuYTJY"
   },
   {
-    "title": "camara",
-    "description": "camara web",
-    "price": 4570,
-    "thumbnails": [],
-    "code": "abc121",
-    "stock": 25,
-    "status": true,
-    "category": "Componentes PC",
-    "id": "A1xtu3HILs0VJ3pMIoDwj"
-  },
-  {
     "title": "xbox 360",
     "description": "de 250gb",
     "price": 9730,
@@ -99,14 +88,25 @@
     "id": "z5G87Vtzaw8QJpu5IOC_h"
   },
   {
-    "title": "Monitor",
-    "description": "32 pulgadas",
-    "price": 12730,
-    "thumbnails": [],
+    "title": "iphone",
+    "description": "telefono apple",
+    "price": "234657",
+    "img": "Sin Imagen",
     "code": "abc127",
-    "stock": 30,
+    "stock": "6",
+    "category": "celulares",
     "status": true,
-    "category": "Monitores",
-    "id": "ty6SDpEdNlPOYP-AGOX1A"
+    "id": "aYWtQizMf9TdnN8vpxDbF"
+  },
+  {
+    "title": "iphone",
+    "description": "telefono apple",
+    "price": "234657",
+    "img": "Sin Imagen",
+    "code": "abc127",
+    "stock": "6",
+    "category": "celulares",
+    "status": true,
+    "id": "LJXUX63-uIaFdSh4X3yTS"
   }
 ]
