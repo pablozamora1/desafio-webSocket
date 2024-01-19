@@ -25,11 +25,13 @@ class ProductManager {
       console.log("Error al escribir el archivo", error);
     }
   }
+
   // FUNCION PARA AGREGAR PRODUCTOS AL ARCHIVO JSON
   async addProducts(product) {
     try {
       const readProd = await this.readFiles();
       product.id = nanoid();
+      const arrayProd = [product];
       const allProducts = [...readProd, product];
       await this.writeProduct(allProducts);
       return "Producto Añadido";
@@ -61,8 +63,6 @@ class ProductManager {
       console.log("Error al leer el archivo", error);
     }
   }
-
-
 
   // FUNCION PARA ACTUALIZAR UN PRODUCTO
   async updateProduct(pid, updatedProduct) {

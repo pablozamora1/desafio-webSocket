@@ -58,31 +58,35 @@ class CartManager {
   }
   // FUNCION PARA AGREGAR PRODUCTOS AL CARRITO
   async addToCart(idCart, idProduct) {
-    const cartById = await this.getCartById(idCart);
-    if (!cartById) return "carrito no encontrado";
-    const productById = await allProducts.getProductById(idProduct);
-    if (!productById) return "Producto no encontrado";
+    try {
+      const cartById = await this.getCartById(idCart);
+      if (!cartById) return "carrito no encontrado";
+      const productById = await allProducts.getProductById(idProduct);
+      if (!productById) return "Producto no encontrado";
 
-    const allCarts = await this.readCart();
-    const filterCarts = allCarts.filter((item) => item.id != idCart);
+      const allCarts = await this.readCart();
+      const filterCarts = allCarts.filter((item) => item.id != idCart);
 
-    if (cartById.products.some((item) => item.id == idProduct)) {
-      const moreProductCart = cartById.products.find(
-        (item) => item.id == idProduct
-      );
-      moreProductCart.quantity++;
-      console.log(moreProductCart.quantity);
-      const allCarts = [cartById, ...filterCarts];
-      await this.writeCart(allCarts);
-      return "Se sumo el producto al carrito";
+      if (cartById.products.some((item) => item.id == idProduct)) {
+        const moreProductCart = cartById.products.find(
+          (item) => item.id == idProduct
+        );
+        moreProductCart.quantity++;
+        console.log(moreProductCart.quantity);
+        const allCarts = [cartById, ...filterCarts];
+        await this.writeCart(allCarts);
+        return "Se sumo el producto al carrito";
+      }
+
+      cartById.products.push({ id: productById.id, quantity: 1 });
+
+      const productCart = [cartById, ...filterCarts];
+      await this.writeCart(productCart);
+
+      return "producto agregado al carrito";
+    } catch (error) {
+      console.log("Error al agregar un carrito al archivo", error);
     }
-
-    cartById.products.push({ id: productById.id, quantity: 1 })
-
-    const productCart = [cartById, ...filterCarts];
-    await this.writeCart(productCart);
-
-    return "producto agregado al carrito";
   }
 }
 

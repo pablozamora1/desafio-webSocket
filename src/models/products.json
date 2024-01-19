@@ -94,19 +94,8 @@
     "img": "Sin Imagen",
     "code": "abc127",
     "stock": "6",
-    "category": "celulares",
+    "category": "tele",
     "status": true,
-    "id": "aYWtQizMf9TdnN8vpxDbF"
-  },
-  {
-    "title": "iphone",
-    "description": "telefono apple",
-    "price": "234657",
-    "img": "Sin Imagen",
-    "code": "abc127",
-    "stock": "6",
-    "category": "celulares",
-    "status": true,
-    "id": "LJXUX63-uIaFdSh4X3yTS"
+    "id": "l8qD1Rl6F-Q2K1qYyyMix"
   }
 ]
