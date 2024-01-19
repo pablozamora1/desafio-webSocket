@@ -26,19 +26,59 @@ class ProductManager {
     }
   }
 
-  // FUNCION PARA AGREGAR PRODUCTOS AL ARCHIVO JSON
-  async addProducts(product) {
+  async addProduct({
+    title,
+    description,
+    price,
+    img,
+    code,
+    stock,
+    category,
+    thumbnails,
+  }) {
     try {
-      const readProd = await this.readFiles();
-      product.id = nanoid();
-      const arrayProd = [product];
-      const allProducts = [...readProd, product];
-      await this.writeProduct(allProducts);
-      return "Producto Añadido";
+      const arrayProductos = await this.readFiles();
+
+      if (!title || !description || !price || !code || !stock || !category) {
+        console.log("Todos los campos son obligatorios");
+        return;
+      }
+
+      if (arrayProductos.some((item) => item.code === code)) {
+        console.log("El código debe ser único");
+        return;
+      }
+
+      const newProduct = {
+        title,
+        description,
+        price,
+        img,
+        code,
+        stock,
+        category,
+        status: true,
+        thumbnails: thumbnails || [],
+      };
+
+      if (arrayProductos.length > 0) {
+        ProductManager.ultId = arrayProductos.reduce(
+          (maxId, product) => Math.max(maxId, product.id),
+          0
+        );
+      }
+
+      newProduct.id = nanoid(3);
+
+      arrayProductos.push(newProduct);
+      await this.writeProduct(arrayProductos);
     } catch (error) {
-      console.log("Error al escribir el archivo", error);
+      console.log("Error al agregar producto", error);
+      throw error;
     }
   }
+
+
   // FUNCION PARA OBTENER LOS PRODUCTOS
   async getProducts() {
     try {

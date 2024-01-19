@@ -39,20 +39,20 @@ const io = new Server(server);
 
 io.on("connection", async (socket) => {
   console.log("Nuevo cliente conectado");
-  
+
   //Envia el array de productos al cliente que se conectó:
   socket.emit("productos", await product.getProducts());
-  
+
   //Recibe el evento "eliminarProducto" desde el cliente:
   socket.on("eliminarProducto", async (id) => {
     await product.deleteProduct(id);
     //Envia el array de productos actualizado a todos los productos:
     io.sockets.emit("productos", await product.getProducts());
   });
-  
+
   //Recibe el evento "agregarProducto" desde el cliente:
   socket.on("agregarProducto", async (producto) => {
-    await product.addProducts(producto);
+    await product.addProduct(producto);
     //Envia el array de productos actualizado a todos los productos:
     io.sockets.emit("productos", await product.getProducts());
   });

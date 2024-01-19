@@ -1,6 +1,3 @@
-//Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de productos, sin embargo, ésta trabajará con websockets.
-//Al trabajar con websockets, cada vez que creemos un producto nuevo, o bien cada vez que eliminemos un producto, se debe actualizar automáticamente en dicha vista la lista.
-
 const socket = io();
 
 socket.on("productos", (data) => {
@@ -17,10 +14,10 @@ const renderProductos = (productos) => {
     card.classList.add("card");
     //Agregamos boton para eliminar:
     card.innerHTML = `
-                <p>Id: ${item.id} </p>
-                <p>Titulo: ${item.title} </p>
-                <p>Precio: ${item.price} </p>
-                <button> Eliminar Producto </button>
+    <p>Titulo: ${item.title} </p>
+    <p>Precio: ${item.price} </p>
+    <p>Id: ${item.id} </p>
+    <button> Eliminar Producto </button>
         
         `;
     contenedorProductos.appendChild(card);
